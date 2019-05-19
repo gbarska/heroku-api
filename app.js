@@ -19,10 +19,12 @@ app.use(router)
 
 app.get("/",(req,res)=>{
     console.log("Responding to root index")
-     res.sendFile(path.join(__dirname+'/index.html'))
-    //res.send("hello world")
+    //  res.sendFile(path.join(__dirname+'/index.html'))
+    res.send("hello world")
 })
 
-app.listen(3003,() => {
-console.log("Server is up and listening on 3003")
+const PORT = process.env.PORT || 3003
+
+app.listen(PORT,() => {
+console.log("Server is up and listening on "+ PORT)
 })
