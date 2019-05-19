@@ -17,18 +17,20 @@ router.get('/messages',(req,res)=>{
 router.get('/cliente/:id',(req,res)=>{
     console.log("Fetching user with id: "+req.params.id)
     
-    const connection = mysql.createConnection({
-        host:   'localhost',
-        user: 'cajama84_root',
-        password: 'prodbcrm',
-        database: 'cajama84_prodbcrm'
+    // const connection = mysql.createConnection({
+    //     host:   'localhost',
+    //     // user: 'cajama84_root',
+    //     // password: 'prodbcrm',
+    //     // database: 'cajama84_prodbcrm'
+    //     user: 'ba795eada9a77c'
 
-    })
+    // })
+    connection = getConnection()
 
-    const revendaId = req.params.id
-    const queryString = "SELECT * FROM TBCRM1_CLI WHERE REVENDA_ID = ?"
+    const userId = req.params.id
+    const queryString = "SELECT * FROM users WHERE id = ?"
 
-    connection.query(queryString,[revendaId],(err, rows, fields)=>{
+    connection.query(queryString,[userId],(err, rows, fields)=>{
         
         if(err){
         console.log("Failed to query for users: " + err)
@@ -59,7 +61,7 @@ router.post("/user_create",(req,res)=>{
     const firstName = req.body.firstName
     const lastName = req.body.lastName
 
-    const queryString = "INSERT INTO TBCRM1_LEAD_HIST (ID,DATA,DESCRICAO,ID_CLI) VALUES(?,?,'BLABLA',114)"
+    const queryString = "INSERT INTO users (first_name,last_name) VALUES(?,?)"
     con = getConnection()
 
     console.log('connection received...')
@@ -91,10 +93,15 @@ router.get("/api",(req,res)=>{
 
 const pool= mysql.createPool({
         connectionLimit: 10,
-        host:   'localhost',
-        user: 'cajama84_root',
-        password: 'prodbcrm',
-        database: 'cajama84_prodbcrm' 
+        // host:   'localhost',
+        host: 'us-cdbr-iron-east-02.cleardb.net',
+        user: 'ba795eada9a77c',
+        password: '48242cf6',
+        database: 'heroku_72a4f3cc19bf728'
+        // user: 'cajama84_root',
+        // password: 'prodbcrm',
+        // database: 'cajama84_prodbcrm'
+        
 })
 
 function getConnection(){
