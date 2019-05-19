@@ -39,7 +39,7 @@ router.get('/cliente/:id',(req,res)=>{
         return
         }
 
-        console.log("I think we fetched users successfully")
+        console.log("I think we fetched the user successfully")
 
         //specifies how the data will be sent
         const clientes = rows.map((cliente) => {
@@ -80,6 +80,45 @@ router.post("/user_create",(req,res)=>{
     res.end()
 })
 
+router.get('/clientes',(req,res)=>{
+    console.log("Fetching user with id: "+req.params.id)
+    
+    // const connection = mysql.createConnection({
+    //     host:   'localhost',
+    //     // user: 'cajama84_root',
+    //     // password: 'prodbcrm',
+    //     // database: 'cajama84_prodbcrm'
+    //     user: 'ba795eada9a77c'
+
+    // })
+    connection = getConnection()
+
+    const userId = req.params.id
+    const queryString = "SELECT * FROM users"
+
+    connection.query(queryString,[userId],(err, rows, fields)=>{
+        
+        if(err){
+        console.log("Failed to query for users: " + err)
+        res.sendStatus(500)
+        res.end()
+        return
+        }
+
+        console.log("I think we fetched users successfully")
+
+        //specifies how the data will be sent
+        const clientes = rows.map((cliente) => {
+            return {
+               cliente
+            }
+        })
+
+        res.json(clientes)
+    })
+
+    //res.end()
+})
 
 router.get("/api",(req,res)=>{
     console.log("Responding to root route")
